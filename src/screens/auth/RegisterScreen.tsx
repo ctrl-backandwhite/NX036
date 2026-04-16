@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
+import FA5 from 'react-native-vector-icons/FontAwesome5';
 
 export function RegisterScreen({ navigation }: any) {
   const [form, setForm] = useState({
@@ -47,7 +48,7 @@ export function RegisterScreen({ navigation }: any) {
         keyboardShouldPersistTaps="handled">
         {/* Header */}
         <TouchableOpacity onPress={() => navigation.goBack()} className="mb-4">
-          <Text className="text-2xl text-slate-600">←</Text>
+          <FA5 name="arrow-left" size={18} color="#475569" />
         </TouchableOpacity>
 
         <Text className="text-2xl font-bold text-slate-800 mb-1">Crear cuenta</Text>
@@ -84,7 +85,7 @@ export function RegisterScreen({ navigation }: any) {
           onChangeText={v => updateField('email', v)}
           keyboardType="email-address"
           autoCapitalize="none"
-          leftIcon="✉️"
+          leftIcon={<FA5 name="envelope" size={14} color="#64748b" solid />}
           error={errors.email}
         />
 
@@ -94,7 +95,7 @@ export function RegisterScreen({ navigation }: any) {
           value={form.phone}
           onChangeText={v => updateField('phone', v)}
           keyboardType="phone-pad"
-          leftIcon="📞"
+          leftIcon={<FA5 name="phone-alt" size={14} color="#64748b" solid />}
           error={errors.phone}
         />
 
@@ -104,7 +105,7 @@ export function RegisterScreen({ navigation }: any) {
           value={form.password}
           onChangeText={v => updateField('password', v)}
           secureTextEntry
-          leftIcon="🔒"
+          leftIcon={<FA5 name="lock" size={14} color="#64748b" solid />}
           error={errors.password}
         />
 
@@ -114,7 +115,7 @@ export function RegisterScreen({ navigation }: any) {
           value={form.confirmPassword}
           onChangeText={v => updateField('confirmPassword', v)}
           secureTextEntry
-          leftIcon="🔒"
+          leftIcon={<FA5 name="lock" size={14} color="#64748b" solid />}
           error={errors.confirmPassword}
         />
 
@@ -137,16 +138,15 @@ export function RegisterScreen({ navigation }: any) {
         <TouchableOpacity
           onPress={() => setAcceptTerms(!acceptTerms)}
           className="flex-row items-start mb-6">
-          <View className={`w-5 h-5 rounded border-2 mr-3 mt-0.5 items-center justify-center ${
-            acceptTerms ? 'border-indigo-500 bg-indigo-500' : 'border-slate-300'
-          }`}>
+          <View className={`w-5 h-5 rounded border-2 mr-3 mt-0.5 items-center justify-center ${acceptTerms ? 'border-gray-800 bg-gray-800' : 'border-slate-300'
+            }`}>
             {acceptTerms && <Text className="text-white text-xs">✓</Text>}
           </View>
           <Text className="flex-1 text-sm text-slate-600">
             Acepto los{' '}
-            <Text className="text-indigo-600 font-semibold">Términos y Condiciones</Text>
+            <Text className="text-gray-800 font-semibold">Términos y Condiciones</Text>
             {' '}y la{' '}
-            <Text className="text-indigo-600 font-semibold">Política de Privacidad</Text>
+            <Text className="text-gray-800 font-semibold">Política de Privacidad</Text>
           </Text>
         </TouchableOpacity>
         {errors.terms && <Text className="text-red-500 text-xs -mt-4 mb-4">{errors.terms}</Text>}
@@ -157,7 +157,7 @@ export function RegisterScreen({ navigation }: any) {
         <View className="flex-row justify-center mt-6 mb-8">
           <Text className="text-slate-500">¿Ya tienes cuenta? </Text>
           <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Text className="font-semibold text-indigo-600">Inicia sesión</Text>
+            <Text className="font-semibold text-gray-800">Inicia sesión</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
+import FA5 from 'react-native-vector-icons/FontAwesome5';
 
 export function ForgotPasswordScreen({ navigation }: any) {
   const [step, setStep] = useState<'email' | 'code' | 'reset'>('email');
@@ -38,14 +39,14 @@ export function ForgotPasswordScreen({ navigation }: any) {
         contentContainerClassName="flex-grow px-6 py-8"
         keyboardShouldPersistTaps="handled">
         <TouchableOpacity onPress={() => navigation.goBack()} className="mb-6">
-          <Text className="text-2xl text-slate-600">←</Text>
+          <FA5 name="arrow-left" size={18} color="#475569" />
         </TouchableOpacity>
 
         {step === 'email' && (
           <>
             <View className="items-center mb-8">
-              <View className="w-20 h-20 bg-indigo-100 rounded-full items-center justify-center mb-4">
-                <Text className="text-4xl">🔒</Text>
+              <View className="w-20 h-20 bg-gray-100 rounded-full items-center justify-center mb-4">
+                <FA5 name="lock" size={32} color="#1f2937" solid />
               </View>
               <Text className="text-2xl font-bold text-slate-800">¿Olvidaste tu contraseña?</Text>
               <Text className="text-sm text-slate-500 text-center mt-2">
@@ -60,7 +61,7 @@ export function ForgotPasswordScreen({ navigation }: any) {
               onChangeText={setEmail}
               keyboardType="email-address"
               autoCapitalize="none"
-              leftIcon="✉️"
+              leftIcon={<FA5 name="envelope" size={14} color="#64748b" solid />}
               error={error}
             />
 
@@ -71,8 +72,8 @@ export function ForgotPasswordScreen({ navigation }: any) {
         {step === 'code' && (
           <>
             <View className="items-center mb-8">
-              <View className="w-20 h-20 bg-indigo-100 rounded-full items-center justify-center mb-4">
-                <Text className="text-4xl">📧</Text>
+              <View className="w-20 h-20 bg-gray-100 rounded-full items-center justify-center mb-4">
+                <FA5 name="envelope-open-text" size={32} color="#1f2937" solid />
               </View>
               <Text className="text-2xl font-bold text-slate-800">Verificar código</Text>
               <Text className="text-sm text-slate-500 text-center mt-2">
@@ -96,7 +97,7 @@ export function ForgotPasswordScreen({ navigation }: any) {
             <TouchableOpacity className="items-center mt-6">
               <Text className="text-sm text-slate-500">
                 ¿No recibiste el código?{' '}
-                <Text className="font-semibold text-indigo-600">Reenviar</Text>
+                <Text className="font-semibold text-gray-800">Reenviar</Text>
               </Text>
             </TouchableOpacity>
           </>
@@ -106,7 +107,7 @@ export function ForgotPasswordScreen({ navigation }: any) {
           <>
             <View className="items-center mb-8">
               <View className="w-20 h-20 bg-emerald-100 rounded-full items-center justify-center mb-4">
-                <Text className="text-4xl">🔑</Text>
+                <FA5 name="key" size={32} color="#1f2937" solid />
               </View>
               <Text className="text-2xl font-bold text-slate-800">Nueva contraseña</Text>
               <Text className="text-sm text-slate-500 text-center mt-2">
@@ -120,7 +121,7 @@ export function ForgotPasswordScreen({ navigation }: any) {
               value={newPassword}
               onChangeText={setNewPassword}
               secureTextEntry
-              leftIcon="🔒"
+              leftIcon={<FA5 name="lock" size={14} color="#64748b" solid />}
             />
             <Input
               label="Confirmar contraseña"
@@ -128,7 +129,7 @@ export function ForgotPasswordScreen({ navigation }: any) {
               value={confirmPassword}
               onChangeText={setConfirmPassword}
               secureTextEntry
-              leftIcon="🔒"
+              leftIcon={<FA5 name="lock" size={14} color="#64748b" solid />}
               error={error}
             />
 
@@ -139,9 +140,8 @@ export function ForgotPasswordScreen({ navigation }: any) {
         {/* Progress indicator */}
         <View className="flex-row justify-center mt-8 gap-2">
           {['email', 'code', 'reset'].map((s, i) => (
-            <View key={s} className={`h-1.5 rounded-full ${
-              s === step ? 'w-8 bg-indigo-600' : i < ['email', 'code', 'reset'].indexOf(step) ? 'w-4 bg-indigo-300' : 'w-4 bg-slate-200'
-            }`} />
+            <View key={s} className={`h-1.5 rounded-full ${s === step ? 'w-8 bg-gray-800' : i < ['email', 'code', 'reset'].indexOf(step) ? 'w-4 bg-gray-300' : 'w-4 bg-slate-200'
+              }`} />
           ))}
         </View>
       </ScrollView>

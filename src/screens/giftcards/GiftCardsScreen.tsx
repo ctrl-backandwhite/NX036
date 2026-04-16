@@ -4,6 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { mockGiftCards } from '../../data/mockData';
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
+import FA5 from 'react-native-vector-icons/FontAwesome5';
 
 const statusStyle: Record<string, { label: string; color: string; bg: string }> = {
   active: { label: 'Activa', color: 'text-emerald-700', bg: 'bg-emerald-100' },
@@ -24,15 +25,15 @@ export function GiftCardsScreen({ navigation }: any) {
     <View className="flex-1 bg-slate-50" style={{ paddingTop: insets.top }}>
       <View className="px-5 pt-4 pb-3 bg-white border-b border-slate-100 flex-row items-center">
         <TouchableOpacity onPress={() => navigation.goBack()} className="mr-3">
-          <Text className="text-2xl text-slate-600">←</Text>
+          <FA5 name="arrow-left" size={18} color="#475569" />
         </TouchableOpacity>
         <Text className="text-xl font-bold text-slate-800">Tarjetas de Regalo</Text>
       </View>
 
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Total Balance */}
-        <View className="mx-5 mt-4 bg-gradient-to-br rounded-3xl p-6 items-center" style={{ backgroundColor: '#7C3AED' }}>
-          <Text className="text-5xl mb-3">🎁</Text>
+        <View className="mx-5 mt-4 bg-gradient-to-br rounded-3xl p-6 items-center" style={{ backgroundColor: '#1f2937' }}>
+          <FA5 name="gift" size={40} color="#ffffff" solid style={{ marginBottom: 12 }} />
           <Text className="text-white/70 text-sm">Balance total disponible</Text>
           <Text className="text-white text-4xl font-bold mt-1">€{totalBalance.toFixed(2)}</Text>
           <Text className="text-white/50 text-xs mt-2">{activeCards.length} tarjeta{activeCards.length !== 1 ? 's' : ''} activa{activeCards.length !== 1 ? 's' : ''}</Text>
@@ -44,8 +45,8 @@ export function GiftCardsScreen({ navigation }: any) {
             onPress={() => setShowAddCard(!showAddCard)}
             className="bg-white rounded-2xl p-4 border border-slate-100 flex-row items-center justify-between">
             <View className="flex-row items-center">
-              <Text className="text-lg mr-2">➕</Text>
-              <Text className="text-base font-semibold text-indigo-600">Añadir tarjeta de regalo</Text>
+              <FA5 name="plus" size={14} color="#1f2937" style={{ marginRight: 8 }} />
+              <Text className="text-base font-semibold text-gray-800">Añadir tarjeta de regalo</Text>
             </View>
             <Text className="text-slate-400">{showAddCard ? '⌄' : '›'}</Text>
           </TouchableOpacity>
@@ -58,7 +59,7 @@ export function GiftCardsScreen({ navigation }: any) {
                 value={newCode}
                 onChangeText={setNewCode}
                 autoCapitalize="characters"
-                leftIcon="🎁"
+                leftIcon={<FA5 name="gift" size={14} color="#64748b" solid />}
               />
               <Button title="Canjear tarjeta" onPress={() => setShowAddCard(false)} fullWidth />
             </View>
@@ -75,7 +76,7 @@ export function GiftCardsScreen({ navigation }: any) {
                 <View key={card.id} className="bg-white rounded-2xl p-4 mb-3 border border-slate-100">
                   <View className="flex-row items-center justify-between mb-3">
                     <View className="flex-row items-center">
-                      <Text className="text-xl mr-2">🎁</Text>
+                      <FA5 name="gift" size={18} color="#d97706" solid style={{ marginRight: 8 }} />
                       <Text className="text-sm font-semibold text-slate-800">{card.code}</Text>
                     </View>
                     <View className={`px-2.5 py-1 rounded-full ${statusStyle[card.status].bg}`}>
@@ -95,7 +96,7 @@ export function GiftCardsScreen({ navigation }: any) {
                   {/* Usage bar */}
                   <View className="h-2 bg-slate-100 rounded-full overflow-hidden mb-2">
                     <View
-                      className="h-full bg-indigo-500 rounded-full"
+                      className="h-full bg-gray-800 rounded-full"
                       style={{ width: `${100 - usedPercentage}%` }}
                     />
                   </View>
@@ -123,7 +124,7 @@ export function GiftCardsScreen({ navigation }: any) {
             {otherCards.map(card => (
               <View key={card.id} className="bg-white rounded-xl p-3 mb-2 flex-row items-center justify-between border border-slate-100 opacity-60">
                 <View className="flex-row items-center">
-                  <Text className="mr-2">🎁</Text>
+                  <FA5 name="gift" size={14} color="#64748b" solid style={{ marginRight: 8 }} />
                   <View>
                     <Text className="text-sm text-slate-700">{card.code}</Text>
                     <Text className="text-xs text-slate-400">€{card.originalAmount.toFixed(2)}</Text>

@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Button } from '../../components/Button';
+import FA5 from 'react-native-vector-icons/FontAwesome5';
 
 export function OrderConfirmationScreen({ navigation }: any) {
   const insets = useSafeAreaInsets();
@@ -11,7 +12,7 @@ export function OrderConfirmationScreen({ navigation }: any) {
     <View className="flex-1 bg-white items-center justify-center px-6" style={{ paddingTop: insets.top }}>
       {/* Success animation placeholder */}
       <View className="w-28 h-28 bg-emerald-100 rounded-full items-center justify-center mb-6">
-        <Text className="text-6xl">✅</Text>
+        <FA5 name="check-circle" size={56} color="#10b981" solid />
       </View>
 
       <Text className="text-2xl font-bold text-slate-800 text-center">¡Pedido confirmado!</Text>
@@ -22,7 +23,7 @@ export function OrderConfirmationScreen({ navigation }: any) {
       {/* Order number */}
       <View className="bg-slate-50 rounded-2xl px-6 py-4 mt-8 items-center border border-slate-200">
         <Text className="text-sm text-slate-500">Número de pedido</Text>
-        <Text className="text-xl font-bold text-indigo-600 mt-1">{orderNumber}</Text>
+        <Text className="text-xl font-bold text-gray-800 mt-1">{orderNumber}</Text>
       </View>
 
       {/* Details */}
@@ -37,11 +38,11 @@ export function OrderConfirmationScreen({ navigation }: any) {
         </View>
         <View className="flex-row items-center justify-between py-2 border-t border-slate-200">
           <Text className="text-sm text-slate-500">Total pagado</Text>
-          <Text className="text-sm font-bold text-indigo-600">€1,675.80</Text>
+          <Text className="text-sm font-bold text-gray-800">€1,675.80</Text>
         </View>
         <View className="flex-row items-center justify-between py-2 border-t border-slate-200">
           <Text className="text-sm text-slate-500">Puntos ganados</Text>
-          <Text className="text-sm font-semibold text-amber-600">🏆 +2,770 pts</Text>
+          <Text className="text-sm font-semibold text-amber-600"><FA5 name="trophy" size={12} color="#d97706" solid /> +2,770 pts</Text>
         </View>
       </View>
 

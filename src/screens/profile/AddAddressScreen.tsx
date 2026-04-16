@@ -4,6 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
 import type { Address } from '../../types';
+import FA5 from 'react-native-vector-icons/FontAwesome5';
 
 export function AddAddressScreen({ navigation, route }: any) {
   const insets = useSafeAreaInsets();
@@ -35,7 +36,7 @@ export function AddAddressScreen({ navigation, route }: any) {
       style={{ paddingTop: insets.top }}>
       <View className="px-5 pt-4 pb-3 bg-white border-b border-slate-100 flex-row items-center">
         <TouchableOpacity onPress={() => navigation.goBack()} className="mr-3">
-          <Text className="text-2xl text-slate-600">←</Text>
+          <FA5 name="arrow-left" size={18} color="#475569" />
         </TouchableOpacity>
         <Text className="text-xl font-bold text-slate-800">
           {isEditing ? 'Editar dirección' : 'Nueva dirección'}
@@ -50,18 +51,17 @@ export function AddAddressScreen({ navigation, route }: any) {
             <TouchableOpacity
               key={label}
               onPress={() => updateField('label', label)}
-              className={`px-4 py-2 rounded-full border ${
-                form.label === label ? 'border-indigo-500 bg-indigo-50' : 'border-slate-200 bg-white'
-              }`}>
-              <Text className={`text-sm ${form.label === label ? 'text-indigo-600 font-semibold' : 'text-slate-600'}`}>
+              className={`px-4 py-2 rounded-full border ${form.label === label ? 'border-gray-800 bg-gray-50' : 'border-slate-200 bg-white'
+                }`}>
+              <Text className={`text-sm ${form.label === label ? 'text-gray-800 font-semibold' : 'text-slate-600'}`}>
                 {label}
               </Text>
             </TouchableOpacity>
           ))}
         </View>
 
-        <Input label="Nombre completo" placeholder="María García" value={form.fullName} onChangeText={v => updateField('fullName', v)} leftIcon="👤" />
-        <Input label="Dirección" placeholder="Calle, número, piso..." value={form.street} onChangeText={v => updateField('street', v)} leftIcon="📍" />
+        <Input label="Nombre completo" placeholder="María García" value={form.fullName} onChangeText={v => updateField('fullName', v)} leftIcon={<FA5 name="user" size={14} color="#64748b" solid />} />
+        <Input label="Dirección" placeholder="Calle, número, piso..." value={form.street} onChangeText={v => updateField('street', v)} leftIcon={<FA5 name="map-marker-alt" size={14} color="#64748b" solid />} />
 
         <View className="flex-row gap-3">
           <View className="flex-1">
@@ -81,14 +81,14 @@ export function AddAddressScreen({ navigation, route }: any) {
           </View>
         </View>
 
-        <Input label="Teléfono" placeholder="+34 612 345 678" value={form.phone} onChangeText={v => updateField('phone', v)} keyboardType="phone-pad" leftIcon="📞" />
+        <Input label="Teléfono" placeholder="+34 612 345 678" value={form.phone} onChangeText={v => updateField('phone', v)} keyboardType="phone-pad" leftIcon={<FA5 name="phone-alt" size={14} color="#64748b" solid />} />
 
         {/* Default toggle */}
         <TouchableOpacity
           onPress={() => setForm(prev => ({ ...prev, isDefault: !prev.isDefault }))}
           className="flex-row items-center justify-between bg-white rounded-xl p-4 border border-slate-200 mb-8">
           <Text className="text-base text-slate-700">Usar como dirección predeterminada</Text>
-          <View className={`w-12 h-7 rounded-full justify-center px-0.5 ${form.isDefault ? 'bg-indigo-600' : 'bg-slate-300'}`}>
+          <View className={`w-12 h-7 rounded-full justify-center px-0.5 ${form.isDefault ? 'bg-gray-800' : 'bg-slate-300'}`}>
             <View className={`w-6 h-6 bg-white rounded-full shadow-sm ${form.isDefault ? 'self-end' : 'self-start'}`} />
           </View>
         </TouchableOpacity>

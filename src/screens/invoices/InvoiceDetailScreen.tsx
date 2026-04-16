@@ -4,6 +4,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { PriceRow, Divider } from '../../components/Shared';
 import { Button } from '../../components/Button';
 import type { Invoice } from '../../types';
+import FA5 from 'react-native-vector-icons/FontAwesome5';
 
 export function InvoiceDetailScreen({ navigation, route }: any) {
   const insets = useSafeAreaInsets();
@@ -14,12 +15,12 @@ export function InvoiceDetailScreen({ navigation, route }: any) {
       <View className="px-5 pt-4 pb-3 bg-white border-b border-slate-100 flex-row items-center justify-between">
         <View className="flex-row items-center">
           <TouchableOpacity onPress={() => navigation.goBack()} className="mr-3">
-            <Text className="text-2xl text-slate-600">←</Text>
+            <FA5 name="arrow-left" size={18} color="#475569" />
           </TouchableOpacity>
           <Text className="text-xl font-bold text-slate-800">Factura</Text>
         </View>
-        <TouchableOpacity className="bg-indigo-100 px-3 py-1.5 rounded-lg">
-          <Text className="text-sm font-semibold text-indigo-600">⬇️ Descargar</Text>
+        <TouchableOpacity className="bg-gray-100 px-3 py-1.5 rounded-lg">
+          <Text className="text-sm font-semibold text-gray-800"><FA5 name="download" size={12} color="#1f2937" solid /> Descargar</Text>
         </TouchableOpacity>
       </View>
 
@@ -28,7 +29,7 @@ export function InvoiceDetailScreen({ navigation, route }: any) {
         <View className="mx-5 mt-4 bg-white rounded-2xl p-5 border border-slate-100">
           <View className="flex-row items-center justify-between mb-4">
             <View>
-              <Text className="text-2xl font-bold text-indigo-600">ShopNX</Text>
+              <Text className="text-2xl font-bold text-gray-800">ShopNX</Text>
               <Text className="text-xs text-slate-500">Tu tienda favorita</Text>
             </View>
             <View className="items-end">
@@ -46,14 +47,14 @@ export function InvoiceDetailScreen({ navigation, route }: any) {
             </View>
             <View className="items-end">
               <Text className="text-xs text-slate-400 uppercase mb-1">Pedido</Text>
-              <Text className="text-sm text-indigo-600 font-semibold">{invoice.orderNumber}</Text>
+              <Text className="text-sm text-gray-800 font-semibold">{invoice.orderNumber}</Text>
             </View>
           </View>
         </View>
 
         {/* Billing Address */}
         <View className="mx-5 mt-3 bg-white rounded-2xl p-4 border border-slate-100">
-          <Text className="text-sm font-semibold text-slate-800 mb-2">📍 Facturar a</Text>
+          <Text className="text-sm font-semibold text-slate-800 mb-2"><FA5 name="map-marker-alt" size={12} color="#1e293b" solid /> Facturar a</Text>
           <Text className="text-sm text-slate-700">{invoice.billingAddress.fullName}</Text>
           <Text className="text-sm text-slate-500">{invoice.billingAddress.street}</Text>
           <Text className="text-sm text-slate-500">
@@ -95,10 +96,10 @@ export function InvoiceDetailScreen({ navigation, route }: any) {
 
       <View className="px-5 py-4 bg-white border-t border-slate-100 flex-row gap-3" style={{ paddingBottom: insets.bottom + 16 }}>
         <View className="flex-1">
-          <Button title="📤 Compartir" onPress={() => {}} variant="outline" fullWidth />
+          <Button title="Compartir" onPress={() => { }} variant="outline" fullWidth />
         </View>
         <View className="flex-1">
-          <Button title="⬇️ Descargar PDF" onPress={() => {}} fullWidth />
+          <Button title="Descargar PDF" onPress={() => { }} fullWidth />
         </View>
       </View>
     </View>

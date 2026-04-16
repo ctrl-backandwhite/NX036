@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, TextInput, Text, TouchableOpacity } from 'react-native';
+import FA5 from 'react-native-vector-icons/FontAwesome5';
 
 interface InputProps {
   label?: string;
@@ -10,7 +11,7 @@ interface InputProps {
   keyboardType?: 'default' | 'email-address' | 'numeric' | 'phone-pad';
   autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
   error?: string;
-  leftIcon?: string;
+  leftIcon?: React.ReactNode;
   disabled?: boolean;
   multiline?: boolean;
   numberOfLines?: number;
@@ -43,10 +44,9 @@ export function Input({
         <Text className="text-sm font-medium text-slate-700 mb-1.5">{label}</Text>
       )}
       <View
-        className={`flex-row items-center border rounded-xl px-4 ${
-          isFocused ? 'border-indigo-500 bg-indigo-50/30' : 'border-slate-200 bg-slate-50'
-        } ${error ? 'border-red-400 bg-red-50/30' : ''} ${disabled ? 'opacity-60 bg-slate-100' : ''}`}>
-        {leftIcon && <Text className="mr-3 text-lg">{leftIcon}</Text>}
+        className={`flex-row items-center border rounded-lg px-4 ${isFocused ? 'border-gray-800 bg-white' : 'border-gray-200 bg-white'
+          } ${error ? 'border-red-400 bg-red-50/30' : ''} ${disabled ? 'opacity-60 bg-gray-100' : ''}`}>
+        {leftIcon && <View className="mr-3">{typeof leftIcon === 'string' ? <Text className="text-lg">{leftIcon}</Text> : leftIcon}</View>}
         <TextInput
           className={`flex-1 text-base text-slate-800 ${multiline ? 'min-h-[100px]' : 'h-12'}`}
           placeholder={placeholder}
@@ -66,7 +66,7 @@ export function Input({
         />
         {secureTextEntry && (
           <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-            <Text className="text-lg">{showPassword ? '🙈' : '👁️'}</Text>
+            <FA5 name={showPassword ? 'eye-slash' : 'eye'} size={18} color="#64748b" />
           </TouchableOpacity>
         )}
       </View>

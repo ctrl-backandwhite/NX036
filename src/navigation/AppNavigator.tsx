@@ -1,8 +1,13 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
+import FA5 from 'react-native-vector-icons/FontAwesome5';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useCart } from '../contexts/CartContext';
+
+// Splash
+import { SplashScreen } from '../screens/SplashScreen';
 
 // Auth
 import { LoginScreen } from '../screens/auth/LoginScreen';
@@ -58,12 +63,12 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 const ProfileStack = createNativeStackNavigator();
 
-// ============ Tab Icons ============
-const tabIcons: Record<string, { active: string; inactive: string }> = {
-  HomeTab: { active: '🏠', inactive: '🏡' },
-  CategoriesTab: { active: '📂', inactive: '📁' },
-  CartTab: { active: '🛒', inactive: '🛒' },
-  ProfileTab: { active: '👤', inactive: '👤' },
+// ============ Tab Icons FA5 ============
+const tabFA5Icons: Record<string, string> = {
+  HomeTab: 'home',
+  CategoriesTab: 'th-large',
+  CartTab: 'shopping-cart',
+  ProfileTab: 'user',
 };
 
 const tabLabels: Record<string, string> = {
@@ -95,8 +100,10 @@ function ProfileNavigator() {
   );
 }
 
-// ============ Main Tabs ============
 function MainTabs() {
+  const { getTotalItems } = useCart();
+  const cartCount = getTotalItems();
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -105,32 +112,56 @@ function MainTabs() {
           height: 65,
           paddingBottom: 8,
           paddingTop: 8,
-          backgroundColor: '#FFFFFF',
+          backgroundColor: '#ffffff',
           borderTopWidth: 1,
-          borderTopColor: '#F1F5F9',
+          borderTopColor: '#e5e7eb',
           elevation: 0,
           shadowOpacity: 0,
         },
         tabBarIcon: ({ focused }) => {
-          const icons = tabIcons[route.name];
-          return <Text style={{ fontSize: 22 }}>{focused ? icons.active : icons.inactive}</Text>;
+          const iconName = tabFA5Icons[route.name];
+          return (
+            <View>
+              <FA5
+                name={iconName}
+                size={21}
+                color={focused ? '#1f2937' : '#9ca3af'}
+                solid={false}
+              />
+              {route.name === 'CartTab' && cartCount > 0 && (
+                <View style={{
+                  position: 'absolute', top: -4, right: -10,
+                  backgroundColor: '#ef4444', borderRadius: 8,
+                  minWidth: 16, height: 16, alignItems: 'center', justifyContent: 'center',
+                  paddingHorizontal: 4,
+                }}>
+                  <Text style={{ color: '#fff', fontSize: 9, fontWeight: '700' }}>
+                    {cartCount > 99 ? '99+' : cartCount}
+                  </Text>
+                </View>
+              )}
+            </View>
+          );
         },
-        tabBarLabel: ({ focused }) => (
+        tabBarLabel: ({ focused, children }) => (
           <Text
             style={{
               fontSize: 11,
               fontWeight: focused ? '600' : '400',
-              color: focused ? '#4F46E5' : '#94A3B8',
-              marginTop: 2,
+              color: focused ? '#1f2937' : '#9ca3af',
+              marginTop: 0,
             }}>
-            {tabLabels[route.name]}
+            {children}
           </Text>
         ),
+        tabBarActiveTintColor: '#1f2937',
+        tabBarInactiveTintColor: '#9ca3af',
+        tabBarShowLabel: true,
       })}>
-      <Tab.Screen name="HomeTab" component={HomeScreen} />
-      <Tab.Screen name="CategoriesTab" component={CategoriesScreen} />
-      <Tab.Screen name="CartTab" component={CartScreen} />
-      <Tab.Screen name="ProfileTab" component={ProfileNavigator} />
+      <Tab.Screen name="HomeTab" component={HomeScreen} options={{ tabBarLabel: 'Inicio' }} />
+      <Tab.Screen name="CategoriesTab" component={CategoriesScreen} options={{ tabBarLabel: 'Categorías' }} />
+      <Tab.Screen name="CartTab" component={CartScreen} options={{ tabBarLabel: 'Carrito' }} />
+      <Tab.Screen name="ProfileTab" component={ProfileNavigator} options={{ tabBarLabel: 'Perfil' }} />
     </Tab.Navigator>
   );
 }
@@ -155,6 +186,7 @@ export function AppNavigator() {
           headerShown: false,
           animation: 'slide_from_right',
         }}>
+        <Stack.Screen name="Splash" component={SplashScreen} options={{ animation: 'fade' }} />
         <Stack.Screen name="Auth" component={AuthNavigator} />
         <Stack.Screen name="Main" component={MainTabs} />
         <Stack.Screen name="Search" component={SearchScreen} options={{ animation: 'fade' }} />

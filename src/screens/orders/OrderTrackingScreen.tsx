@@ -3,6 +3,7 @@ import { View, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { statusConfig } from '../../components/OrderCard';
 import type { Order } from '../../types';
+import FA5 from 'react-native-vector-icons/FontAwesome5';
 
 export function OrderTrackingScreen({ navigation, route }: any) {
   const insets = useSafeAreaInsets();
@@ -12,7 +13,7 @@ export function OrderTrackingScreen({ navigation, route }: any) {
     <View className="flex-1 bg-white" style={{ paddingTop: insets.top }}>
       <View className="px-5 pt-4 pb-3 border-b border-slate-100 flex-row items-center">
         <TouchableOpacity onPress={() => navigation.goBack()} className="mr-3">
-          <Text className="text-2xl text-slate-600">←</Text>
+          <FA5 name="arrow-left" size={18} color="#475569" />
         </TouchableOpacity>
         <View>
           <Text className="text-xl font-bold text-slate-800">Seguimiento</Text>
@@ -23,7 +24,7 @@ export function OrderTrackingScreen({ navigation, route }: any) {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Map placeholder */}
         <View className="h-48 bg-slate-100 items-center justify-center">
-          <Text className="text-5xl mb-2">🗺️</Text>
+          <FA5 name="map-marked-alt" size={40} color="#64748b" solid style={{ marginBottom: 8 }} />
           <Text className="text-sm text-slate-500">Mapa de seguimiento</Text>
         </View>
 
@@ -47,8 +48,8 @@ export function OrderTrackingScreen({ navigation, route }: any) {
                 <Text className="text-xs text-slate-400">Número de seguimiento</Text>
                 <Text className="text-sm font-semibold text-slate-800 mt-0.5">{order.trackingNumber}</Text>
               </View>
-              <TouchableOpacity className="bg-indigo-100 px-3 py-1.5 rounded-lg">
-                <Text className="text-xs font-semibold text-indigo-600">Copiar</Text>
+              <TouchableOpacity className="bg-gray-100 px-3 py-1.5 rounded-lg">
+                <Text className="text-xs font-semibold text-gray-800">Copiar</Text>
               </TouchableOpacity>
             </View>
           )}
@@ -66,13 +67,12 @@ export function OrderTrackingScreen({ navigation, route }: any) {
               <View key={event.id} className="flex-row">
                 {/* Timeline line */}
                 <View className="items-center mr-4 w-8">
-                  <View className={`w-4 h-4 rounded-full border-2 z-10 ${
-                    event.isCompleted
+                  <View className={`w-4 h-4 rounded-full border-2 z-10 ${event.isCompleted
                       ? isActive
-                        ? 'bg-indigo-600 border-indigo-600'
+                        ? 'bg-gray-800 border-gray-800'
                         : 'bg-emerald-500 border-emerald-500'
                       : 'bg-white border-slate-300'
-                  }`}>
+                    }`}>
                     {event.isCompleted && !isActive && (
                       <Text className="text-white text-[8px] text-center leading-[12px]">✓</Text>
                     )}
@@ -87,11 +87,11 @@ export function OrderTrackingScreen({ navigation, route }: any) {
 
                 {/* Content */}
                 <View className={`flex-1 pb-6 ${!event.isCompleted ? 'opacity-40' : ''}`}>
-                  <Text className={`text-sm font-semibold ${isActive ? 'text-indigo-600' : 'text-slate-800'}`}>
+                  <Text className={`text-sm font-semibold ${isActive ? 'text-gray-800' : 'text-slate-800'}`}>
                     {event.description}
                   </Text>
                   {event.location && (
-                    <Text className="text-xs text-slate-500 mt-0.5">📍 {event.location}</Text>
+                    <Text className="text-xs text-slate-500 mt-0.5"><FA5 name="map-marker-alt" size={10} color="#64748b" solid /> {event.location}</Text>
                   )}
                   {event.timestamp && (
                     <Text className="text-xs text-slate-400 mt-0.5">
@@ -111,15 +111,15 @@ export function OrderTrackingScreen({ navigation, route }: any) {
           <Text className="text-sm font-semibold text-slate-800 mb-3">¿Necesitas ayuda?</Text>
           <View className="flex-row gap-3">
             <TouchableOpacity className="flex-1 bg-white rounded-xl py-3 items-center border border-slate-200">
-              <Text className="text-lg mb-1">📞</Text>
+              <FA5 name="phone-alt" size={16} color="#1f2937" solid style={{ marginBottom: 4 }} />
               <Text className="text-xs text-slate-600">Llamar</Text>
             </TouchableOpacity>
             <TouchableOpacity className="flex-1 bg-white rounded-xl py-3 items-center border border-slate-200">
-              <Text className="text-lg mb-1">💬</Text>
+              <FA5 name="comment" size={16} color="#1f2937" solid style={{ marginBottom: 4 }} />
               <Text className="text-xs text-slate-600">Chat</Text>
             </TouchableOpacity>
             <TouchableOpacity className="flex-1 bg-white rounded-xl py-3 items-center border border-slate-200">
-              <Text className="text-lg mb-1">✉️</Text>
+              <FA5 name="envelope" size={16} color="#1f2937" solid style={{ marginBottom: 4 }} />
               <Text className="text-xs text-slate-600">Email</Text>
             </TouchableOpacity>
           </View>

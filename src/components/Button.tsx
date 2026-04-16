@@ -14,18 +14,18 @@ interface ButtonProps {
 }
 
 const variantStyles = {
-  primary: 'bg-indigo-600 active:bg-indigo-700',
-  secondary: 'bg-slate-600 active:bg-slate-700',
-  outline: 'bg-transparent border-2 border-indigo-600',
+  primary: 'bg-gray-800 active:bg-gray-900',
+  secondary: 'bg-gray-100 active:bg-gray-200',
+  outline: 'bg-transparent border-2 border-gray-800',
   ghost: 'bg-transparent',
   danger: 'bg-red-600 active:bg-red-700',
 };
 
 const textVariantStyles = {
   primary: 'text-white',
-  secondary: 'text-white',
-  outline: 'text-indigo-600',
-  ghost: 'text-indigo-600',
+  secondary: 'text-gray-800',
+  outline: 'text-gray-800',
+  ghost: 'text-gray-800',
   danger: 'text-white',
 };
 
@@ -56,9 +56,8 @@ export function Button({
     <TouchableOpacity
       onPress={onPress}
       disabled={disabled || loading}
-      className={`flex-row items-center justify-center ${variantStyles[variant]} ${sizeStyles[size]} ${
-        fullWidth ? 'w-full' : ''
-      } ${disabled ? 'opacity-50' : ''} ${className}`}
+      className={`flex-row items-center justify-center ${variantStyles[variant]} ${sizeStyles[size]} ${fullWidth ? 'w-full' : ''
+        } ${disabled ? 'opacity-50' : ''} ${className}`}
       activeOpacity={0.7}>
       {loading ? (
         <ActivityIndicator color={variant === 'outline' || variant === 'ghost' ? '#4F46E5' : 'white'} />

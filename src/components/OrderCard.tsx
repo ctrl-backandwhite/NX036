@@ -1,18 +1,32 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import FA5 from 'react-native-vector-icons/FontAwesome5';
 import type { Order, OrderStatus } from '../types';
 
 const statusConfig: Record<OrderStatus, { label: string; color: string; bgColor: string; icon: string }> = {
-  pending: { label: 'Pendiente', color: 'text-amber-700', bgColor: 'bg-amber-100', icon: '🕐' },
-  confirmed: { label: 'Confirmado', color: 'text-blue-700', bgColor: 'bg-blue-100', icon: '✅' },
-  processing: { label: 'Preparando', color: 'text-blue-700', bgColor: 'bg-blue-100', icon: '📦' },
-  shipped: { label: 'Enviado', color: 'text-indigo-700', bgColor: 'bg-indigo-100', icon: '🚚' },
-  in_transit: { label: 'En tránsito', color: 'text-indigo-700', bgColor: 'bg-indigo-100', icon: '🚚' },
-  out_for_delivery: { label: 'En reparto', color: 'text-purple-700', bgColor: 'bg-purple-100', icon: '📬' },
-  delivered: { label: 'Entregado', color: 'text-emerald-700', bgColor: 'bg-emerald-100', icon: '✅' },
-  cancelled: { label: 'Cancelado', color: 'text-red-700', bgColor: 'bg-red-100', icon: '❌' },
-  returned: { label: 'Devuelto', color: 'text-orange-700', bgColor: 'bg-orange-100', icon: '↩️' },
-  refunded: { label: 'Reembolsado', color: 'text-slate-700', bgColor: 'bg-slate-100', icon: '💰' },
+  pending: { label: 'Pendiente', color: 'text-amber-700', bgColor: 'bg-amber-100', icon: 'clock' },
+  confirmed: { label: 'Confirmado', color: 'text-blue-700', bgColor: 'bg-blue-100', icon: 'check-circle' },
+  processing: { label: 'Preparando', color: 'text-blue-700', bgColor: 'bg-blue-100', icon: 'box' },
+  shipped: { label: 'Enviado', color: 'text-gray-700', bgColor: 'bg-gray-100', icon: 'shipping-fast' },
+  in_transit: { label: 'En tránsito', color: 'text-gray-700', bgColor: 'bg-gray-100', icon: 'truck' },
+  out_for_delivery: { label: 'En reparto', color: 'text-purple-700', bgColor: 'bg-purple-100', icon: 'truck-loading' },
+  delivered: { label: 'Entregado', color: 'text-emerald-700', bgColor: 'bg-emerald-100', icon: 'check-circle' },
+  cancelled: { label: 'Cancelado', color: 'text-red-700', bgColor: 'bg-red-100', icon: 'times-circle' },
+  returned: { label: 'Devuelto', color: 'text-orange-700', bgColor: 'bg-orange-100', icon: 'undo-alt' },
+  refunded: { label: 'Reembolsado', color: 'text-slate-700', bgColor: 'bg-slate-100', icon: 'money-bill-wave' },
+};
+
+const statusIconColors: Record<OrderStatus, string> = {
+  pending: '#b45309',
+  confirmed: '#1d4ed8',
+  processing: '#1d4ed8',
+  shipped: '#374151',
+  in_transit: '#374151',
+  out_for_delivery: '#7e22ce',
+  delivered: '#047857',
+  cancelled: '#b91c1c',
+  returned: '#c2410c',
+  refunded: '#475569',
 };
 
 interface OrderCardProps {
@@ -32,15 +46,15 @@ export function OrderCard({ order, onPress }: OrderCardProps) {
       <View className="flex-row items-center justify-between mb-3">
         <Text className="text-sm font-semibold text-slate-800">{order.orderNumber}</Text>
         <View className={`flex-row items-center px-2.5 py-1 rounded-full ${status.bgColor}`}>
-          <Text className="text-xs mr-1">{status.icon}</Text>
-          <Text className={`text-xs font-semibold ${status.color}`}>{status.label}</Text>
+          <FA5 name={status.icon} size={10} color={statusIconColors[order.status]} solid />
+          <Text className={`text-xs font-semibold ml-1 ${status.color}`}>{status.label}</Text>
         </View>
       </View>
 
       <View className="flex-row mb-3">
         {order.items.slice(0, 3).map((item) => (
           <View key={item.id} className="w-14 h-14 bg-slate-100 rounded-xl items-center justify-center mr-2">
-            <Text className="text-2xl">📦</Text>
+            <FA5 name="box" size={20} color="#94a3b8" solid />
           </View>
         ))}
         {order.items.length > 3 && (

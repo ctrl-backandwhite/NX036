@@ -3,12 +3,13 @@ import { View, Text, ScrollView, TouchableOpacity, KeyboardAvoidingView, Platfor
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Input } from '../../components/Input';
 import { Button } from '../../components/Button';
+import FA5 from 'react-native-vector-icons/FontAwesome5';
 
-const paymentTypes = [
-  { type: 'credit_card', label: 'Tarjeta de crédito', icon: '💳' },
-  { type: 'debit_card', label: 'Tarjeta de débito', icon: '💳' },
-  { type: 'paypal', label: 'PayPal', icon: '🅿️' },
-  { type: 'bank_transfer', label: 'Transferencia', icon: '🏦' },
+const paymentTypes: { type: string; label: string; icon: string; isBrand?: boolean }[] = [
+  { type: 'credit_card', label: 'Tarjeta de crédito', icon: 'credit-card' },
+  { type: 'debit_card', label: 'Tarjeta de débito', icon: 'credit-card' },
+  { type: 'paypal', label: 'PayPal', icon: 'paypal', isBrand: true },
+  { type: 'bank_transfer', label: 'Transferencia', icon: 'university' },
 ];
 
 export function AddPaymentMethodScreen({ navigation, route }: any) {
@@ -45,7 +46,7 @@ export function AddPaymentMethodScreen({ navigation, route }: any) {
       style={{ paddingTop: insets.top }}>
       <View className="px-5 pt-4 pb-3 bg-white border-b border-slate-100 flex-row items-center">
         <TouchableOpacity onPress={() => navigation.goBack()} className="mr-3">
-          <Text className="text-2xl text-slate-600">←</Text>
+          <FA5 name="arrow-left" size={18} color="#475569" />
         </TouchableOpacity>
         <Text className="text-xl font-bold text-slate-800">
           {isEditing ? 'Editar método de pago' : 'Nuevo método de pago'}
@@ -60,11 +61,10 @@ export function AddPaymentMethodScreen({ navigation, route }: any) {
             <TouchableOpacity
               key={pt.type}
               onPress={() => setSelectedType(pt.type)}
-              className={`flex-row items-center px-4 py-3 rounded-xl border ${
-                selectedType === pt.type ? 'border-indigo-500 bg-indigo-50' : 'border-slate-200 bg-white'
-              }`}>
-              <Text className="text-lg mr-2">{pt.icon}</Text>
-              <Text className={`text-sm ${selectedType === pt.type ? 'text-indigo-600 font-semibold' : 'text-slate-600'}`}>
+              className={`flex-row items-center px-4 py-3 rounded-xl border ${selectedType === pt.type ? 'border-gray-800 bg-gray-50' : 'border-slate-200 bg-white'
+                }`}>
+              <FA5 name={pt.icon} size={16} color={selectedType === pt.type ? '#1f2937' : '#64748b'} {...(pt.isBrand ? { brand: true } : { solid: true })} />
+              <Text className={`text-sm ml-2 ${selectedType === pt.type ? 'text-gray-800 font-semibold' : 'text-slate-600'}`}>
                 {pt.label}
               </Text>
             </TouchableOpacity>
@@ -73,13 +73,13 @@ export function AddPaymentMethodScreen({ navigation, route }: any) {
 
         {/* Card Preview */}
         {isCard && (
-          <View className="bg-indigo-600 rounded-2xl p-5 mb-6" style={{ aspectRatio: 1.586 }}>
+          <View className="bg-gray-800 rounded-2xl p-5 mb-6" style={{ aspectRatio: 1.586 }}>
             <View className="flex-1 justify-between">
               <View className="flex-row justify-between items-start">
                 <Text className="text-white/80 text-sm">
                   {selectedType === 'credit_card' ? 'Crédito' : 'Débito'}
                 </Text>
-                <Text className="text-white text-lg">💳</Text>
+                <FA5 name="credit-card" size={16} color="#ffffff" solid />
               </View>
               <Text className="text-white text-xl tracking-widest font-mono">
                 {cardNumber || '•••• •••• •••• ••••'}
@@ -107,7 +107,7 @@ export function AddPaymentMethodScreen({ navigation, route }: any) {
               value={cardNumber}
               onChangeText={t => setCardNumber(formatCardNumber(t))}
               keyboardType="numeric"
-              leftIcon="💳"
+              leftIcon={<FA5 name="credit-card" size={14} color="#64748b" solid />}
               maxLength={19}
             />
             <Input
@@ -116,7 +116,7 @@ export function AddPaymentMethodScreen({ navigation, route }: any) {
               value={cardHolder}
               onChangeText={setCardHolder}
               autoCapitalize="characters"
-              leftIcon="👤"
+              leftIcon={<FA5 name="user" size={14} color="#64748b" solid />}
             />
             <View className="flex-row gap-3">
               <View className="flex-1">
@@ -153,16 +153,19 @@ export function AddPaymentMethodScreen({ navigation, route }: any) {
             onChangeText={setPaypalEmail}
             keyboardType="email-address"
             autoCapitalize="none"
-            leftIcon="✉️"
+            leftIcon={<FA5 name="envelope" size={14} color="#64748b" solid />}
           />
         )}
 
         {/* Bank Transfer */}
         {selectedType === 'bank_transfer' && (
           <View className="bg-blue-50 rounded-2xl p-4 border border-blue-200">
-            <Text className="text-sm text-blue-800">
-              ℹ️ La transferencia bancaria será configurada al momento del pago. Se te proporcionarán los datos bancarios.
-            </Text>
+            <View className="flex-row items-start">
+              <FA5 name="info-circle" size={14} color="#1e40af" solid />
+              <Text className="text-sm text-blue-800 ml-2 flex-1">
+                La transferencia bancaria será configurada al momento del pago. Se te proporcionarán los datos bancarios.
+              </Text>
+            </View>
           </View>
         )}
 
@@ -171,14 +174,14 @@ export function AddPaymentMethodScreen({ navigation, route }: any) {
           onPress={() => setIsDefault(!isDefault)}
           className="flex-row items-center justify-between bg-white rounded-xl p-4 border border-slate-200 my-6">
           <Text className="text-base text-slate-700">Usar como método predeterminado</Text>
-          <View className={`w-12 h-7 rounded-full justify-center px-0.5 ${isDefault ? 'bg-indigo-600' : 'bg-slate-300'}`}>
+          <View className={`w-12 h-7 rounded-full justify-center px-0.5 ${isDefault ? 'bg-gray-800' : 'bg-slate-300'}`}>
             <View className={`w-6 h-6 bg-white rounded-full shadow-sm ${isDefault ? 'self-end' : 'self-start'}`} />
           </View>
         </TouchableOpacity>
 
         {/* Security note */}
         <View className="flex-row items-center bg-emerald-50 rounded-xl p-3 mb-6 border border-emerald-200">
-          <Text className="text-lg mr-2">🔒</Text>
+          <FA5 name="lock" size={14} color="#047857" solid />
           <Text className="text-xs text-emerald-700 flex-1">
             Tu información de pago está protegida con encriptación de nivel bancario (AES-256).
           </Text>

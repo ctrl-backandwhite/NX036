@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
+import FA5 from 'react-native-vector-icons/FontAwesome5';
 
 interface SectionHeaderProps {
   title: string;
@@ -13,7 +14,7 @@ export function SectionHeader({ title, action, onAction }: SectionHeaderProps) {
       <Text className="text-lg font-bold text-slate-800">{title}</Text>
       {action && onAction && (
         <TouchableOpacity onPress={onAction}>
-          <Text className="text-sm font-semibold text-indigo-600">{action}</Text>
+          <Text className="text-sm font-semibold text-gray-800">{action}</Text>
         </TouchableOpacity>
       )}
     </View>
@@ -45,13 +46,13 @@ interface EmptyStateProps {
 export function EmptyState({ icon, title, description, actionTitle, onAction }: EmptyStateProps) {
   return (
     <View className="flex-1 items-center justify-center px-8 py-16">
-      <Text className="text-6xl mb-4">{icon}</Text>
-      <Text className="text-xl font-bold text-slate-800 text-center mb-2">{title}</Text>
+      <FA5 name={icon} size={48} color="#94a3b8" solid />
+      <Text className="text-xl font-bold text-slate-800 text-center mb-2 mt-4">{title}</Text>
       <Text className="text-sm text-slate-500 text-center mb-6">{description}</Text>
       {actionTitle && onAction && (
         <TouchableOpacity
           onPress={onAction}
-          className="bg-indigo-600 px-6 py-3 rounded-xl">
+          className="bg-gray-800 px-6 py-3 rounded-lg">
           <Text className="text-white font-semibold">{actionTitle}</Text>
         </TouchableOpacity>
       )}
